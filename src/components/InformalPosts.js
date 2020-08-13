@@ -11,7 +11,7 @@ function InformalPosts_({ informalPosts, setDelete, setRedact }) {
       <div className="dialog">
         <Others />
         {informalPosts.map((post) => (
-          <Fragment key={post[1]}>
+          <Fragment key={post.id}>
             <div className="profile profile_ml">
               <img
                 className="icon"
@@ -20,11 +20,11 @@ function InformalPosts_({ informalPosts, setDelete, setRedact }) {
               />
               <div className="title title_ml title_marlef">Ivan Petrovich</div>
             </div>
-            <div className="dialog__post">{post[0]}</div>
+            <div className="dialog__post">{post.post}</div>
             <div className="dialog__control-buttons">
               <button
                 className="del"
-                onClick={() => setDelete(post[0], post[1])}
+                onClick={() => setDelete({ post: post.post, id: post.id })}
               >
                 Удалить
               </button>
@@ -46,11 +46,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setDelete: (...value) => {
-      dispatch(deleteInformalPost(...value));
+    setDelete: (value) => {
+      dispatch(deleteInformalPost(value));
     },
-    setRedact: (...value) => {
-      dispatch(redactInformalPost(...value));
+    setRedact: (value) => {
+      dispatch(redactInformalPost(value));
     },
   };
 };

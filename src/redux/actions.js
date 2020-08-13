@@ -8,40 +8,40 @@ import {
   CURR_PATH,
 } from "./types";
 
-export function createWorkPost(...values) {
+export function createWorkPost(value) {
   return {
     type: CREATE_WORK_POST,
-    payload: [...values],
+    payload: value,
   };
 }
-export function createInformalPost(...values) {
+export function createInformalPost(value) {
   return {
     type: CREATE_INFORMAL_POST,
-    payload: [...values],
+    payload: value,
   };
 }
-export function deleteWorkPost(...values) {
+export function deleteWorkPost(value) {
   return {
     type: DELETE_WORK_POST,
-    payload: [...values],
+    payload: value,
   };
 }
-export function deleteInformalPost(...values) {
+export function deleteInformalPost(value) {
   return {
     type: DELETE_INFORMAL_POST,
-    payload: [...values],
+    payload: value,
   };
 }
-export function redactWorkPost(...values) {
+export function redactWorkPost(value) {
   return {
     type: REDACT_WORK_POST,
-    payload: [...values],
+    payload: value,
   };
 }
-export function redactInformalPost(...values) {
+export function redactInformalPost(value) {
   return {
     type: REDACT_INFORMAL_POST,
-    payload: [...values],
+    payload: value,
   };
 }
 export function setCurrPath(value) {

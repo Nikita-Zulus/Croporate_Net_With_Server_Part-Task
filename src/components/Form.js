@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { createInformalPost, createWorkPost } from "../redux/actions";
+import {
+  createInformalPost,
+  createWorkPost,
+  setCurrPath,
+} from "../redux/actions";
 import { withRouter } from "react-router-dom";
 
 function Form__(props) {
   const createInformalPost = props.createInformalPost;
   const createWorkPost = props.createWorkPost;
+  const setCurrPath = props.setCurrPath;
   const [value, setValue] = useState("");
   let currpath = props.match.path;
+  setCurrPath(currpath);
   const submitHandler = (event) => {
     event.preventDefault();
     if (value.trim()) {
       if (currpath === "/work") {
-        createWorkPost(value, new Date().toJSON());
+        createWorkPost({ post: value, id: new Date().toJSON() });
       } else {
-        createInformalPost(value, new Date().toJSON());
+        createInformalPost({ post: value, id: new Date().toJSON() });
       }
 
       setValue("");
@@ -37,6 +43,7 @@ function Form__(props) {
 const mapDispatchToProps = {
   createWorkPost,
   createInformalPost,
+  setCurrPath,
 };
 
 const Form_ = withRouter(Form__);

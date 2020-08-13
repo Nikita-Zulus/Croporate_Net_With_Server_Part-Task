@@ -12,7 +12,7 @@ function WorkPosts_({ workPosts, setDelete, setRedact /* , currPath */ }) {
       <div className="dialog">
         <Others />
         {workPosts.map((post) => (
-          <Fragment key={post[1]}>
+          <Fragment key={post.id}>
             <div className="profile profile_ml">
               <img
                 className="icon"
@@ -21,11 +21,11 @@ function WorkPosts_({ workPosts, setDelete, setRedact /* , currPath */ }) {
               />
               <div className="title title_ml title_marlef">Ivan Petrovich</div>
             </div>
-            <div className="dialog__post">{post[0]}</div>
+            <div className="dialog__post">{post.post}</div>
             <div className="dialog__control-buttons">
               <button
                 className="del"
-                onClick={() => setDelete(post[0], post[1])}
+                onClick={() => setDelete({ post: post.post, id: post.id })}
               >
                 Удалить
               </button>
@@ -43,11 +43,11 @@ function WorkPosts_({ workPosts, setDelete, setRedact /* , currPath */ }) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setDelete: (...value) => {
-      dispatch(deleteWorkPost(...value));
+    setDelete: (value) => {
+      dispatch(deleteWorkPost(value));
     },
-    setRedact: (...value) => {
-      dispatch(redactWorkPost(...value));
+    setRedact: (value) => {
+      dispatch(redactWorkPost(value));
     },
   };
 };

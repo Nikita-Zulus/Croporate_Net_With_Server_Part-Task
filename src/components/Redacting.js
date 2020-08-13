@@ -9,7 +9,7 @@ export function Redacting({ post, setRedact }) {
   const submitHandler = (event) => {
     event.preventDefault();
     if (value.trim()) {
-      setRedact(value, post[1]);
+      setRedact({ post: value, id: post.id });
 
       setValue("");
       setShow(false);

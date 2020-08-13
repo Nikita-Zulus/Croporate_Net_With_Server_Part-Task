@@ -143,8 +143,8 @@ code {
   margin-bottom: 20px;
 }
 .dialog {
-  margin-top: 20px;
-  max-height: 560px;
+  /* margin-top: 20px; */
+  max-height: 620px;
   overflow-y: auto;
 }
 

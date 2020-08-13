@@ -9,18 +9,12 @@ import {
 } from "./types";
 
 const initialState = {
-  workPosts: [
-    ["Сколько проектов нужно сделать?", 1],
-    /*   ["Какой проект самый приоритетный?", 2],
-    ["План работ", 3], */
-  ],
+  workPosts: [{ post: "Сколько проектов нужно сделать?", id: 1 }],
   informalPosts: [
-    ["Привет", 1],
-    ["Как дела?", 2],
-    /*  ["Как погода?", 3],
-    ["Как настроение после карантина?", 4], */
+    { post: "Привет", id: 1 },
+    { post: "Как дела?", id: 2 },
   ],
-  currPath: "",
+  currPath: "/",
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -36,32 +30,28 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         workPosts: state.workPosts.filter(
-          (post) => post[1] !== action.payload[1]
+          (post) => post.id !== action.payload.id
         ),
       };
     case DELETE_INFORMAL_POST:
       return {
         ...state,
         informalPosts: state.informalPosts.filter(
-          (post) => post[1] !== action.payload[1]
+          (post) => post.id !== action.payload.id
         ),
       };
     case REDACT_WORK_POST:
       return {
         ...state,
         workPosts: state.workPosts.map((post) =>
-          post[1] === action.payload[1]
-            ? [action.payload[0], post[1]]
-            : [post[0], post[1]]
+          post.id === action.payload.id ? action.payload : post
         ),
       };
     case REDACT_INFORMAL_POST:
       return {
         ...state,
         informalPosts: state.informalPosts.map((post) =>
-          post[1] === action.payload[1]
-            ? [action.payload[0], post[1]]
-            : [post[0], post[1]]
+          post.id === action.payload.id ? action.payload : post
         ),
       };
     case CURR_PATH:
