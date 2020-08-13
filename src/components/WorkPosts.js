@@ -3,12 +3,14 @@ import { Form } from "./Form";
 import { connect } from "react-redux";
 import { deleteWorkPost, redactWorkPost } from "../redux/actions";
 import { Redacting } from "./Redacting";
+import { Others } from "./Others";
 
 function WorkPosts_({ workPosts, setDelete, setRedact /* , currPath */ }) {
   /* console.log(currPath); */
   return (
     <div className="conversations">
       <div className="dialog">
+        <Others />
         {workPosts.map((post) => (
           <Fragment key={post[1]}>
             <div className="profile profile_ml">

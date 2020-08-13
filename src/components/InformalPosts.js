@@ -3,11 +3,13 @@ import { Form } from "./Form";
 import { connect } from "react-redux";
 import { deleteInformalPost, redactInformalPost } from "../redux/actions";
 import { Redacting } from "./Redacting";
+import { Others } from "./Others";
 
 function InformalPosts_({ informalPosts, setDelete, setRedact }) {
   return (
     <div className="conversations">
       <div className="dialog">
+        <Others />
         {informalPosts.map((post) => (
           <Fragment key={post[1]}>
             <div className="profile profile_ml">

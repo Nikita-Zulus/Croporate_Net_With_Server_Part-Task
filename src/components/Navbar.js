@@ -40,6 +40,15 @@ function Navbar_(props) {
             Неформальное общение
           </li>
         </NavLink>
+        <NavLink className="nav__link" to="/" onClick={() => setCurrPath("/")}>
+          <li
+            className={
+              currPath === "/" ? "nav__item nav__item_chosen" : "nav__item"
+            }
+          >
+            Информация
+          </li>
+        </NavLink>
       </ul>
     </nav>
   );

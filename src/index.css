@@ -1,4 +1,3 @@
-/* @import "~bootstrap/scss/bootstrap"; */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -171,6 +170,9 @@ code {
   background-color: grey;
   color: white;
 }
+.profile_others {
+  margin-bottom: 15px;
+}
 @media (max-width: 800px) {
   .title_xxl {
     font-size: 20px;
@@ -190,7 +192,7 @@ code {
   }
   .navbar {
     border-right: none;
-    height: 200px;
+    /* height: 200px; */
   }
   .nav__item,
   .navbar__brand {
