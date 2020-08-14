@@ -6,6 +6,7 @@ import { Navbar } from "./components/Navbar";
 import { InformalPosts } from "./components/InformalPosts";
 import { WorkPosts } from "./components/WorkPosts";
 import { Introduce } from "./components/Introduce";
+import { Registration } from "./components/Registration";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Navbar />
             <Switch>
               <Route path={"/"} exact component={Introduce} />
+              <Route path={"/registration"} exact component={Registration} />
               <Route path={"/work"} component={WorkPosts} />
               <Route path={"/informal"} component={InformalPosts} />
             </Switch>

@@ -49,6 +49,21 @@ function Navbar_(props) {
             Информация
           </li>
         </NavLink>
+        <NavLink
+          className="nav__link"
+          to="/registration"
+          onClick={() => setCurrPath("/registration")}
+        >
+          <li
+            className={
+              currPath === "/registration"
+                ? "nav__item nav__item_chosen"
+                : "nav__item"
+            }
+          >
+            Регистрация
+          </li>
+        </NavLink>
       </ul>
     </nav>
   );

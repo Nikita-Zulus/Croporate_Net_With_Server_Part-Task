@@ -1,16 +1,19 @@
 import React, { useState, Fragment } from "react";
 
-export function Redacting({ post, setRedact }) {
+export function Redacting({ post, setRedact, getPosts, registration }) {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
   const handleRedact = () => {
+    if (!registration) {
+      return;
+    }
     setShow((prev) => !prev);
   };
   const submitHandler = (event) => {
     event.preventDefault();
     if (value.trim()) {
-      setRedact({ post: value, id: post.id });
-
+      setRedact({ post: value, id: post.id, path: post.path });
+      getPosts();
       setValue("");
       setShow(false);
     }

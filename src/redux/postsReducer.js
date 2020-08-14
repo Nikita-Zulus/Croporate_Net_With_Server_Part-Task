@@ -1,63 +1,79 @@
 import {
-  CREATE_WORK_POST,
-  CREATE_INFORMAL_POST,
-  DELETE_WORK_POST,
-  DELETE_INFORMAL_POST,
-  REDACT_WORK_POST,
-  REDACT_INFORMAL_POST,
   CURR_PATH,
+  ADD_FETCH_POST,
+  DELETE_FETCH_POST,
+  REDACT_FETCH_POST,
+  FETCH_POSTS,
+  CHANGE_FIRSTNAME,
+  CHANGE_SECONDNAME,
+  REGISTRATION,
 } from "./types";
 
 const initialState = {
-  workPosts: [{ post: "Сколько проектов нужно сделать?", id: 1 }],
-  informalPosts: [
-    { post: "Привет", id: 1 },
-    { post: "Как дела?", id: 2 },
-  ],
+  workPosts: [],
+  informalPosts: [],
   currPath: "/",
+  registration: false,
+  firstname: "Firstname",
+  secondname: "Secondname",
 };
 
 export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_WORK_POST:
-      return { ...state, workPosts: [...state.workPosts, action.payload] };
-    case CREATE_INFORMAL_POST:
-      return {
-        ...state,
-        informalPosts: [...state.informalPosts, action.payload],
-      };
-    case DELETE_WORK_POST:
+    case ADD_FETCH_POST:
+      return action.payload.path === "/work"
+        ? { ...state, workPosts: [...state.workPosts, action.payload] }
+        : { ...state, informalPosts: [...state.informalPosts, action.payload] };
+
+    case DELETE_FETCH_POST:
       return {
         ...state,
         workPosts: state.workPosts.filter(
           (post) => post.id !== action.payload.id
         ),
-      };
-    case DELETE_INFORMAL_POST:
-      return {
-        ...state,
         informalPosts: state.informalPosts.filter(
           (post) => post.id !== action.payload.id
         ),
       };
-    case REDACT_WORK_POST:
+
+    case REDACT_FETCH_POST:
       return {
         ...state,
         workPosts: state.workPosts.map((post) =>
           post.id === action.payload.id ? action.payload : post
         ),
-      };
-    case REDACT_INFORMAL_POST:
-      return {
-        ...state,
         informalPosts: state.informalPosts.map((post) =>
           post.id === action.payload.id ? action.payload : post
         ),
       };
+    case FETCH_POSTS:
+      return {
+        ...state,
+        workPosts: [...action.payload].filter((post) => post.path === "/work"),
+        informalPosts: [...action.payload].filter(
+          (post) => post.path === "/informal"
+        ),
+      };
+
     case CURR_PATH:
       return {
         ...state,
         currPath: action.payload,
+      };
+    case CHANGE_FIRSTNAME:
+      return {
+        ...state,
+        firstname: action.payload,
+      };
+    case CHANGE_SECONDNAME:
+      return {
+        ...state,
+        secondname: action.payload,
+      };
+    case REGISTRATION:
+      return {
+        ...state,
+        registration: action.payload,
       };
 
     default:

@@ -95,7 +95,7 @@ code {
 .nav__item {
   display: flex;
   font-family: "Lato";
-  margin-bottom: 100px;
+  margin-bottom: 90px;
   padding-left: 40px;
   cursor: pointer;
   height: 40px;
@@ -109,6 +109,7 @@ code {
   background-color: grey;
   color: white;
 }
+
 .navbar__brand {
   height: 60px;
   padding-left: 1rem;
@@ -172,6 +173,19 @@ code {
 }
 .profile_others {
   margin-bottom: 15px;
+}
+.registration,
+.registration__form-vert {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+.alert {
+  background-color: rgb(255, 0, 64);
+  width: 400px;
+  color: white;
+  font-family: "Lato";
+  border-radius: 5px;
 }
 @media (max-width: 800px) {
   .title_xxl {

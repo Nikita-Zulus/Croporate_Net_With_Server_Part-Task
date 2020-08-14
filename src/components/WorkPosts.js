@@ -1,40 +1,69 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Form } from "./Form";
 import { connect } from "react-redux";
-import { deleteWorkPost, redactWorkPost } from "../redux/actions";
+import { deleteFetchPost, redactFetchPost, fetchPosts } from "../redux/actions";
 import { Redacting } from "./Redacting";
 import { Others } from "./Others";
 
-function WorkPosts_({ workPosts, setDelete, setRedact /* , currPath */ }) {
-  /* console.log(currPath); */
+function WorkPosts_({
+  workPosts,
+  setDelete,
+  setRedact,
+  getPosts,
+  firstname,
+  secondname,
+  registration,
+}) {
+  useEffect(() => {
+    getPosts();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className="conversations">
       <div className="dialog">
-        <Others />
-        {workPosts.map((post) => (
-          <Fragment key={post.id}>
-            <div className="profile profile_ml">
-              <img
-                className="icon"
-                src={require("../images/Bender.jpg")}
-                alt="profile-icon"
-              />
-              <div className="title title_ml title_marlef">Ivan Petrovich</div>
-            </div>
-            <div className="dialog__post">{post.post}</div>
-            <div className="dialog__control-buttons">
-              <button
-                className="del"
-                onClick={() => setDelete({ post: post.post, id: post.id })}
-              >
-                Удалить
-              </button>
-              {/*  {currPath === "/work" && ( */}
-              <Redacting post={post} setRedact={setRedact} />
-              {/*   )} */}
-            </div>
-          </Fragment>
-        ))}
+        <Others words={["В сроки укладываемся", "Всё по графику"]} />
+        {workPosts.map((post) =>
+          post.post.length ? (
+            <Fragment key={post.id}>
+              <div className="profile profile_ml">
+                <img
+                  className="icon"
+                  src={require("../images/Bender.jpg")}
+                  alt="profile-icon"
+                />
+                <div className="title title_ml title_marlef">
+                  {`${firstname} ${secondname}`}
+                </div>
+              </div>
+              <div className="dialog__post">{post.post}</div>
+              <div className="dialog__control-buttons">
+                <button
+                  className="del"
+                  onClick={
+                    !registration
+                      ? () => {
+                          return;
+                        }
+                      : () => {
+                          return setDelete({ id: post.id });
+                        }
+                  }
+                >
+                  Удалить
+                </button>
+                <Redacting
+                  post={post}
+                  setRedact={setRedact}
+                  getPosts={getPosts}
+                  registration={registration}
+                />
+              </div>
+            </Fragment>
+          ) : (
+            <div key={post.id}></div>
+          )
+        )}
       </div>
       <Form />
     </div>
@@ -44,10 +73,13 @@ function WorkPosts_({ workPosts, setDelete, setRedact /* , currPath */ }) {
 const mapDispatchToProps = (dispatch) => {
   return {
     setDelete: (value) => {
-      dispatch(deleteWorkPost(value));
+      dispatch(deleteFetchPost(value));
     },
     setRedact: (value) => {
-      dispatch(redactWorkPost(value));
+      dispatch(redactFetchPost(value));
+    },
+    getPosts: () => {
+      dispatch(fetchPosts());
     },
   };
 };
@@ -55,7 +87,9 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     workPosts: state.workPosts,
-    /* currPath: state.currPath, */
+    firstname: state.firstname,
+    secondname: state.secondname,
+    registration: state.registration,
   };
 };
 
