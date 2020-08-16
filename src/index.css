@@ -178,15 +178,32 @@ code {
 .registration__form-vert {
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
   width: 400px;
+}
+.registration {
+  /* margin-top: 100px; */
 }
 .alert {
   background-color: rgb(255, 0, 64);
-  width: 400px;
+  margin: 0 auto;
   color: white;
   font-family: "Lato";
   border-radius: 5px;
 }
+.alert_main-form {
+  background-color: rgb(255, 0, 64);
+  margin: auto;
+  color: white;
+  font-family: "Lato";
+  border-radius: 5px;
+  height: 50px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 800px) {
   .title_xxl {
     font-size: 20px;

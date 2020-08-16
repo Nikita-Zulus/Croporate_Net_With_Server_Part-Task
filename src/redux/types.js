@@ -6,3 +6,4 @@ export const FETCH_POSTS = "FETCH_POSTS";
 export const CHANGE_FIRSTNAME = "CHANGE_FIRSTNAME";
 export const CHANGE_SECONDNAME = "CHANGE_SECONDNAME";
 export const REGISTRATION = "REGISTRATION";
+export const ALERT = "ALERT";

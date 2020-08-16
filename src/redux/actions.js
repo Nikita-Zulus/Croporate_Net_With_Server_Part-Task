@@ -7,11 +7,18 @@ import {
   CHANGE_FIRSTNAME,
   CHANGE_SECONDNAME,
   REGISTRATION,
+  ALERT,
 } from "./types";
 import axios from "axios";
 
-const url = "https://corporate-net-task.firebaseio.com";
+const url = "https://corporate-net-task-30111.firebaseio.com";
 
+export function setAlert(value) {
+  return {
+    type: ALERT,
+    payload: value,
+  };
+}
 export function setCurrPath(value) {
   return {
     type: CURR_PATH,

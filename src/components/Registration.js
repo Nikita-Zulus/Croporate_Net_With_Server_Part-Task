@@ -19,6 +19,7 @@ function Registration_({
     event.preventDefault();
   };
   setCurrPath("/registration");
+  let timerId;
   const handleRegistration = () => {
     if (!firstname.length || !secondname.length) {
       console.log("haha");
@@ -29,23 +30,17 @@ function Registration_({
     changeSecondname(secondname);
     if (!registration) {
       setShow(true);
-      setTimeout(() => {
+      timerId = setTimeout(() => {
         setShow(false);
       }, 4000);
       return;
     }
   };
+  clearTimeout(timerId);
   const [firstname, setfirstname] = useState("");
   const [secondname, setsecondname] = useState("");
   return (
-    <div className="registration title title_xl title_center">
-      {show && (
-        <div className="alert">
-          Регистрация прошла успешно!
-          <br />
-          Теперь можете редактировать, публиковать или удалять свои посты
-        </div>
-      )}
+    <div className="registration title title_xl">
       <form onSubmit={submitHandler}>
         <label className="registration__form-vert">
           Введите Ваше имя
@@ -67,8 +62,20 @@ function Registration_({
             required
           />
         </label>
-        <button onClick={handleRegistration}>Зарегистрироваться</button>
+        <button
+          className="button button_registration"
+          onClick={handleRegistration}
+        >
+          Зарегистрироваться
+        </button>
       </form>
+      {show && (
+        <div className="alert">
+          Регистрация прошла успешно!
+          <br />
+          Теперь можете редактировать, публиковать или удалять свои посты
+        </div>
+      )}
     </div>
   );
 }

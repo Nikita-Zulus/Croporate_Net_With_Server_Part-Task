@@ -1,25 +1,29 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { setCurrPath, addFetchPost } from "../redux/actions";
+import { setCurrPath, addFetchPost, setAlert } from "../redux/actions";
 import { withRouter } from "react-router-dom";
 
 function Form__(props) {
   const { addFetchPost } = props;
+  const { setAlert } = props;
+  const { alert } = props;
   const registration = props.registration;
   const setCurrPath = props.setCurrPath;
   const [value, setValue] = useState("");
-  const [show, setShow] = useState(false);
+  //const [show, setShow] = useState(false);
   let currpath = props.match.path;
   setCurrPath(currpath);
+  let timerId;
   const submitHandler = (event) => {
     event.preventDefault();
     if (!registration) {
-      setShow(true);
-      setTimeout(() => {
-        setShow(false);
+      setAlert(true);
+      timerId = setTimeout(() => {
+        setAlert(false);
       }, 3000);
       return;
     }
+    clearTimeout(timerId);
     if (value.trim()) {
       addFetchPost({ post: value, id: new Date().toJSON(), path: currpath });
       setValue("");
@@ -27,9 +31,10 @@ function Form__(props) {
   };
   return (
     <form onSubmit={submitHandler} className="form">
-      {show && (
-        <div className="alert">
-          Незарегистрированный пользователь не может оставлять посты
+      {alert && (
+        <div className="alert_main-form">
+          Незарегистрированный пользователь не может оставлять, редактировать
+          или удалять посты!
         </div>
       )}
       <div className="form__group">
@@ -47,10 +52,12 @@ function Form__(props) {
 const mapDispatchToProps = {
   setCurrPath,
   addFetchPost,
+  setAlert,
 };
 const mapStateToPrors = (state) => {
   return {
     registration: state.registration,
+    alert: state.alert,
   };
 };
 const Form_ = withRouter(Form__);

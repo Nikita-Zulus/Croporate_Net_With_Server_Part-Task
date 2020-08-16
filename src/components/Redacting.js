@@ -1,14 +1,26 @@
 import React, { useState, Fragment } from "react";
 
-export function Redacting({ post, setRedact, getPosts, registration }) {
+export function Redacting({
+  post,
+  setRedact,
+  getPosts,
+  registration,
+  setAlert,
+}) {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
+  let timerId;
   const handleRedact = () => {
     if (!registration) {
+      setAlert(true);
+      timerId = setTimeout(() => {
+        setAlert(false);
+      }, 3000);
       return;
     }
     setShow((prev) => !prev);
   };
+  clearTimeout(timerId);
   const submitHandler = (event) => {
     event.preventDefault();
     if (value.trim()) {

@@ -1,29 +1,50 @@
 import React, { Fragment, useEffect } from "react";
 import { Form } from "./Form";
 import { connect } from "react-redux";
-import { deleteFetchPost, redactFetchPost, fetchPosts } from "../redux/actions";
+import {
+  deleteFetchPost,
+  redactFetchPost,
+  fetchPosts,
+  setAlert,
+} from "../redux/actions";
 import { Redacting } from "./Redacting";
 import { Others } from "./Others";
 
-function WorkPosts_({
-  workPosts,
+function Posts_({
+  posts,
   setDelete,
   setRedact,
   getPosts,
   firstname,
   secondname,
   registration,
+  setAlert,
+  currPath,
 }) {
   useEffect(() => {
     getPosts();
     // eslint-disable-next-line
   }, []);
-
+  let timerId;
+  const handleClick = () => {
+    setAlert(true);
+    timerId = setTimeout(() => {
+      setAlert(false);
+    }, 3000);
+    return;
+  };
+  clearTimeout(timerId);
+  let exactPosts;
+  if (currPath === "/work") {
+    exactPosts = posts.filter((post) => post.path === "/work");
+  } else {
+    exactPosts = posts.filter((post) => post.path === "/informal");
+  }
   return (
     <div className="conversations">
       <div className="dialog">
         <Others words={["В сроки укладываемся", "Всё по графику"]} />
-        {workPosts.map((post) =>
+        {exactPosts.map((post) =>
           post.post.length ? (
             <Fragment key={post.id}>
               <div className="profile profile_ml">
@@ -42,9 +63,7 @@ function WorkPosts_({
                   className="del"
                   onClick={
                     !registration
-                      ? () => {
-                          return;
-                        }
+                      ? handleClick
                       : () => {
                           return setDelete({ id: post.id });
                         }
@@ -57,6 +76,7 @@ function WorkPosts_({
                   setRedact={setRedact}
                   getPosts={getPosts}
                   registration={registration}
+                  setAlert={setAlert}
                 />
               </div>
             </Fragment>
@@ -81,19 +101,21 @@ const mapDispatchToProps = (dispatch) => {
     getPosts: () => {
       dispatch(fetchPosts());
     },
+    setAlert: (value) => {
+      dispatch(setAlert(value));
+    },
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-    workPosts: state.workPosts,
+    /* workPosts: state.workPosts, */
     firstname: state.firstname,
     secondname: state.secondname,
     registration: state.registration,
+    posts: state.posts,
+    currPath: state.currPath,
   };
 };
 
-export const WorkPosts = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WorkPosts_);
+export const Posts = connect(mapStateToProps, mapDispatchToProps)(Posts_);

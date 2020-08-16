@@ -7,52 +7,40 @@ import {
   CHANGE_FIRSTNAME,
   CHANGE_SECONDNAME,
   REGISTRATION,
+  ALERT,
 } from "./types";
 
 const initialState = {
-  workPosts: [],
-  informalPosts: [],
+  posts: [],
   currPath: "/",
   registration: false,
   firstname: "Firstname",
   secondname: "Secondname",
+  alert: false,
 };
 
 export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_FETCH_POST:
-      return action.payload.path === "/work"
-        ? { ...state, workPosts: [...state.workPosts, action.payload] }
-        : { ...state, informalPosts: [...state.informalPosts, action.payload] };
+      return { ...state, posts: [...state.posts, action.payload] };
 
     case DELETE_FETCH_POST:
       return {
         ...state,
-        workPosts: state.workPosts.filter(
-          (post) => post.id !== action.payload.id
-        ),
-        informalPosts: state.informalPosts.filter(
-          (post) => post.id !== action.payload.id
-        ),
+        posts: state.posts.filter((post) => post.id !== action.payload.id),
       };
 
     case REDACT_FETCH_POST:
       return {
         ...state,
-        workPosts: state.workPosts.map((post) =>
-          post.id === action.payload.id ? action.payload : post
-        ),
-        informalPosts: state.informalPosts.map((post) =>
+        posts: state.posts.map((post) =>
           post.id === action.payload.id ? action.payload : post
         ),
       };
     case FETCH_POSTS:
       return {
         ...state,
-        workPosts: [...action.payload].filter((post) => post.path === "/work"),
-        informalPosts: [...action.payload].filter(
-          (post) => post.path === "/informal"
-        ),
+        posts: action.payload,
       };
 
     case CURR_PATH:
@@ -74,6 +62,11 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         registration: action.payload,
+      };
+    case ALERT:
+      return {
+        ...state,
+        alert: action.payload,
       };
 
     default:
