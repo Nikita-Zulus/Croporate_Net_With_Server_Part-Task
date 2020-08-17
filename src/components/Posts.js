@@ -33,17 +33,25 @@ function Posts_({
     }, 3000);
     return;
   };
-  clearTimeout(timerId);
   let exactPosts;
   if (currPath === "/work") {
     exactPosts = posts.filter((post) => post.path === "/work");
   } else {
     exactPosts = posts.filter((post) => post.path === "/informal");
   }
+  useEffect(() => {
+    clearTimeout(timerId);
+  }, [timerId]);
   return (
     <div className="conversations">
       <div className="dialog">
-        <Others words={["В сроки укладываемся", "Всё по графику"]} />
+        <Others
+          words={
+            currPath === "/work"
+              ? ["В сроки укладываемся", "Всё по графику"]
+              : ["Привет привет", "Общаемся неформально"]
+          }
+        />
         {exactPosts.map((post) =>
           post.post.length ? (
             <Fragment key={post.id}>
@@ -109,7 +117,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    /* workPosts: state.workPosts, */
     firstname: state.firstname,
     secondname: state.secondname,
     registration: state.registration,

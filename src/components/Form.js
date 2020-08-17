@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { setCurrPath, addFetchPost, setAlert } from "../redux/actions";
 import { withRouter } from "react-router-dom";
 
-function Form__(props) {
+function Form_(props) {
   const { addFetchPost } = props;
   const { setAlert } = props;
   const { alert } = props;
   const registration = props.registration;
   const setCurrPath = props.setCurrPath;
   const [value, setValue] = useState("");
-  //const [show, setShow] = useState(false);
   let currpath = props.match.path;
-  setCurrPath(currpath);
+  useEffect(() => {
+    setCurrPath(currpath);
+    // eslint-disable-next-line
+  }, []);
+  console.log(currpath);
   let timerId;
   const submitHandler = (event) => {
     event.preventDefault();
@@ -23,12 +26,14 @@ function Form__(props) {
       }, 3000);
       return;
     }
-    clearTimeout(timerId);
     if (value.trim()) {
       addFetchPost({ post: value, id: new Date().toJSON(), path: currpath });
       setValue("");
     }
   };
+  useEffect(() => {
+    clearTimeout(timerId);
+  }, [timerId]);
   return (
     <form onSubmit={submitHandler} className="form">
       {alert && (
@@ -60,5 +65,7 @@ const mapStateToPrors = (state) => {
     alert: state.alert,
   };
 };
-const Form_ = withRouter(Form__);
-export const Form = connect(mapStateToPrors, mapDispatchToProps)(Form_);
+
+export const Form = withRouter(
+  connect(mapStateToPrors, mapDispatchToProps)(Form_)
+);

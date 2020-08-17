@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import {
   setCurrPath,
@@ -32,13 +32,15 @@ function Registration_({
       setShow(true);
       timerId = setTimeout(() => {
         setShow(false);
-      }, 4000);
+      }, 3000);
       return;
     }
   };
-  clearTimeout(timerId);
   const [firstname, setfirstname] = useState("");
   const [secondname, setsecondname] = useState("");
+  useEffect(() => {
+    clearTimeout(timerId);
+  }, [show, timerId]);
   return (
     <div className="registration title title_xl">
       <form onSubmit={submitHandler}>

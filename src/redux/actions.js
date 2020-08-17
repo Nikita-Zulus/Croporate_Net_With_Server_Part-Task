@@ -89,7 +89,6 @@ export function redactFetchPost(value) {
 }
 export function fetchPosts() {
   return async (dispatch) => {
-    /* showLoader(); */
     const response = await axios.get(url + "/notes.json");
     console.log(response);
     const payload =

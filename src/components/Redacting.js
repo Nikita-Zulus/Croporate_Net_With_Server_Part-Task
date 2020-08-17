@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 
 export function Redacting({
   post,
@@ -20,7 +20,6 @@ export function Redacting({
     }
     setShow((prev) => !prev);
   };
-  clearTimeout(timerId);
   const submitHandler = (event) => {
     event.preventDefault();
     if (value.trim()) {
@@ -30,6 +29,9 @@ export function Redacting({
       setShow(false);
     }
   };
+  useEffect(() => {
+    clearTimeout(timerId);
+  }, [timerId]);
   return (
     <Fragment>
       <button className="red" onClick={handleRedact}>
